@@ -10,6 +10,7 @@ def flips(board, player, location):
     :param location: A pair (r, c) with 0 <= r < 8 and 0 <= c < 8
     :return: A collection of pairs of locations of opponent's pieces that would be flipped by this move
     """
+
     def f(r, c, dr, dc):  # Find flips starting at (r, c) and looking in direction (dr, dc)
         line = []
         while True:
@@ -21,6 +22,7 @@ def flips(board, player, location):
             if board[r][c] == player:
                 return line  # Friendly piece -- capture all opposing pieces seen so far
             line.append((r, c))
+
     result = []
     for d in DIRECTIONS:
         result.extend(f(*location, *d))
@@ -77,19 +79,15 @@ def score(board):
     'X' is winning, negative if 'O' is winning, and 0 if the score is tied.
     """
 
-
-    X = 0
-    O = 0
-    for 'X' in board:
-
-    # for r in range(8):
-    #     for c in range(8):
-    #         if board[r][c] == 'X':
-    #             X += 1
-    #         if board[r][c] == 'O':
-    #             O += 1
-    return ('X' in board) - ('O' in board)
-
+    x = 0
+    o = 0
+    for row in board:
+        for col in row:
+            if col == 'X':
+                x += 1
+            if col == 'O':
+                o += 1
+    return x - o
 
 
 def opposite(player):
@@ -115,9 +113,9 @@ def value(board, player, depth):
         return best([value(successor(board, player, move), opposite(player), depth) for move in moves])
     return score(board)
 
-     # for moves in legal_moves(player, board):
-     #    if player == 'X':
-     #        return max(value(successor(board, player, moves),(opposite(player)), 2))
+    # for moves in legal_moves(player, board):
+    #    if player == 'X':
+    #        return max(value(successor(board, player, moves),(opposite(player)), 2))
 
 
 def less(x, y):
