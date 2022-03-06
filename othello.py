@@ -76,8 +76,18 @@ def score(board):
     :return: The difference between the number of pieces 'X' has and the number 'O' has. This is therefore positive if
     'X' is winning, negative if 'O' is winning, and 0 if the score is tied.
     """
-    # TODO You have to write this one
-    pass  # Start by removing this line, which is just here so that the code is valid Python
+       X = 0
+    O = 0
+    for r in range(8):
+        for c in range(8):
+            if board[r][c] == 'X':
+                X = X + 1
+            if board[r][c] == 'O':
+                O = O + 1
+    if X > O:
+        return X - O
+    else:
+        return O - X
 
 
 def opposite(player):
@@ -94,8 +104,9 @@ def value(board, player, depth):
     :return: The value of board if it is player's turn
     """
 
-    # TODO You have to write this one
-    pass  # Start by removing this line, which is just here so that the code is valid Python
+     for moves in legal_moves(player, board):
+        if player == 'X':
+            return max(value(successor(board, player, moves),(opposite(player)), 2))
 
 
 def less(x, y):
