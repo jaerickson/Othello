@@ -76,18 +76,20 @@ def score(board):
     :return: The difference between the number of pieces 'X' has and the number 'O' has. This is therefore positive if
     'X' is winning, negative if 'O' is winning, and 0 if the score is tied.
     """
-       X = 0
+
+
+    X = 0
     O = 0
-    for r in range(8):
-        for c in range(8):
-            if board[r][c] == 'X':
-                X = X + 1
-            if board[r][c] == 'O':
-                O = O + 1
-    if X > O:
-        return X - O
-    else:
-        return O - X
+    for 'X' in board:
+
+    # for r in range(8):
+    #     for c in range(8):
+    #         if board[r][c] == 'X':
+    #             X += 1
+    #         if board[r][c] == 'O':
+    #             O += 1
+    return ('X' in board) - ('O' in board)
+
 
 
 def opposite(player):
@@ -103,10 +105,19 @@ def value(board, player, depth):
     :param depth: At least 1; greater depth is slower but smarter
     :return: The value of board if it is player's turn
     """
-
-     for moves in legal_moves(player, board):
+    moves = legal_moves(board, player)
+    if moves and (depth > -1):
         if player == 'X':
-            return max(value(successor(board, player, moves),(opposite(player)), 2))
+            best = max
+        else:
+            best = min
+        depth -= 1
+        return best([value(successor(board, player, move), opposite(player), depth) for move in moves])
+    return score(board)
+
+     # for moves in legal_moves(player, board):
+     #    if player == 'X':
+     #        return max(value(successor(board, player, moves),(opposite(player)), 2))
 
 
 def less(x, y):
