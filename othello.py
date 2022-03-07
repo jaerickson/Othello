@@ -78,7 +78,6 @@ def score(board):
     :return: The difference between the number of pieces 'X' has and the number 'O' has. This is therefore positive if
     'X' is winning, negative if 'O' is winning, and 0 if the score is tied.
     """
-
     x = 0
     o = 0
     for row in board:
