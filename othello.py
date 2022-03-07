@@ -102,19 +102,16 @@ def value(board, player, depth):
     :param depth: At least 1; greater depth is slower but smarter
     :return: The value of board if it is player's turn
     """
+    if depth == 0:
+        return score(board)
     moves = legal_moves(board, player)
-    if moves and (depth > -1):
+    if moves:
         if player == 'X':
             best = max
         else:
             best = min
-        depth -= 1
-        return best([value(successor(board, player, move), opposite(player), depth) for move in moves])
+        return best([value(successor(board, player, move), opposite(player), depth - 1) for move in moves])
     return score(board)
-
-    # for moves in legal_moves(player, board):
-    #    if player == 'X':
-    #        return max(value(successor(board, player, moves),(opposite(player)), 2))
 
 
 def less(x, y):
@@ -132,6 +129,7 @@ def best_move(board, player, depth):
     :param depth: At least 1; greater depth is slower but smarter
     :return: The best move (index) for player
     """
+    # similar to best move in tic tac toe with same depth addition
     # TODO You have to write this one
     pass  # Start by removing this line, which is just here so that the code is valid Python
 
