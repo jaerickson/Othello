@@ -2,6 +2,9 @@ INITIAL_STATE = ('........',) * 3 + ('...XO...', '...OX...') + ('........',) * 3
 
 DIRECTIONS = ((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1))
 
+global result_best_move
+result_best_move = 0
+
 
 def flips(board, player, location):
     """
@@ -74,6 +77,7 @@ def legal_moves(board, player):
 
 def score(board):
     """
+    written by: Emily and Bella
     :param board: A sequence of strings
     :return: The difference between the number of pieces 'X' has and the number 'O' has. This is therefore positive if
     'X' is winning, negative if 'O' is winning, and 0 if the score is tied.
@@ -97,6 +101,7 @@ def opposite(player):
 
 def value(board, player, depth):
     """
+    written by: Jessica and Victor
     :param board: A string
     :param player: 'X' or 'O'
     :param depth: At least 1; greater depth is slower but smarter
@@ -124,14 +129,29 @@ def greater(x, y):
 
 def best_move(board, player, depth):
     """
+    written by: Bella and Jessica
     :param board: A string
     :param player: 'X' or 'O'
     :param depth: At least 1; greater depth is slower but smarter
     :return: The best move (index) for player
     """
-    # similar to best move in tic tac toe with same depth addition
-    # TODO You have to write this one
-    pass  # Start by removing this line, which is just here so that the code is valid Python
+    global result_best_move
+    if depth == 0:
+        return result_best_move
+    moves = legal_moves(board, player)
+    if moves and depth > 0:
+        if player == 'X':
+            best_value = -2
+            better = greater
+        else:
+            best_value = 2
+            better = less
+        for move in moves:
+            v = value(successor(board, player, move), opposite(player), depth - 1)
+            if better(v, best_value):
+                best_value = v
+                result_best_move = move
+        return result_best_move
 
 
 def print_board(board):
@@ -152,7 +172,7 @@ def main():
         if moves == ['pass']:
             move = 'pass'
         elif player == 'X':
-            move = best_move(board, player, 5)  # Adjust this number for a stronger, slower player
+            move = best_move(board, player, 20)  # Adjust this number for a stronger, slower player
         else:
             print('Your move.')
             r = int(input('Row: '))
@@ -172,3 +192,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
